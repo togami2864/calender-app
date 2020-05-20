@@ -5,19 +5,22 @@ import dayjs from "dayjs";
 import { Typography } from "@material-ui/core";
 
 import * as styles from "./style.css";
-import { isSameMonth, isFirstDay, isSameDay } from "../../services/calendar";
+import { isSameMonth, isFirstDay, isSameDay, getMonth } from "../../services/calendar";
 
-const CalendarElement = ({ day }) => {
+const CalendarElement = ({ day, month }) => {
 
-    const today = dayjs();
-    // 当日かどうか判断
-    const isToday = isSameDay(day, today);
     //初日かどうか
     const format = isFirstDay(day) ? "M月D日" : "D";
 
-    // 今月以外をグレーダウン
-    const isCurrentMonth = isSameMonth(day, today);
+    const currentMonth = getMonth(month);
+    const isCurrentMonth = isSameMonth(day, currentMonth);
+
     const textColor = isCurrentMonth ? "textPrimary" : "textSecondary";
+    // 今月以外をグレーダウン
+
+    // 当日かどうか判断
+    const today = dayjs();
+    const isToday = isSameDay(day, today);
 
     return (
         <div className={styles.element}>
