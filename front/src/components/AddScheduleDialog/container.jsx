@@ -12,9 +12,28 @@ const mapDispatchToProps = dispatch => ({
     closeDialog: () => {
         dispatch(addScheduleCloseDialog());
     },
+    saveSchedule: schedule => {
+        dispatch(schedulesAddItem(schedule));
+        dispatch(addScheduleCloseDialog());
+    },
     setSchedule: value => {
         dispatch(addScheduleSetValue(value))
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddScheduleDialog);
+const mergeProps = (stateProps, dispatchProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    saveSchedule: () => {
+        const {
+            schedule: { form: schedule }
+        } = stateProps;
+        dispatchProps.saveSchedule(schedule);
+    }
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+    mergeProps
+)(AddScheduleDialog);
