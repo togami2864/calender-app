@@ -6,7 +6,14 @@ import {
     addScheduleSetValue
 } from "../../redux/addSchedule/actions";
 
-const mapStateToProps = state => ({ schedule: state.addSchedule });
+import { crateCalendar } from "../../services/calendar"
+
+import { schedulesAddItem } from "../../redux/schedules/action"
+
+const mapStateToProps = state => ({
+    calendar: state.calendar,
+    schedules: state.addSchedules
+});
 
 const mapDispatchToProps = dispatch => ({
     closeDialog: () => {
@@ -14,7 +21,22 @@ const mapDispatchToProps = dispatch => ({
     },
     setSchedule: value => {
         dispatch(addScheduleSetValue(value))
+    },
+    saveSchedule: schedule => {
+        dispatch(schedulesAddItem(schedule));
+        dispatch(addScheduleCloseDialog())
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddScheduleDialog);
+const mergeProps = (stateProps, dispatchProps) => ({
+    ...stateProps,
+    ...dispatchProps,
+    month: stateProps.calendar,
+    calendar: crateCalendar(stateProps.calendar)
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+    mergeProps
+)(AddScheduleDialog);
