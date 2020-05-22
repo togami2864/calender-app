@@ -9,8 +9,8 @@ const days = ["日", "月", "火", "水", "木", "金", "土"]
 
 
 
-const CalendarBoard = ({ calendar, month, openAddScheduleDialog }) => {
-    // console.log(calendar)
+const CalendarBoard = ({ calendar, month, openAddScheduleDialog, schedules }) => {
+    console.log(schedules)
     return (
         <div className={styles.container}>
             <GridList className={styles.grid} cols={7} spacing={0} cellHeight="auto">
