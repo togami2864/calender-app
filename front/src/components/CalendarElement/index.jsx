@@ -6,8 +6,9 @@ import { Typography } from "@material-ui/core";
 
 import * as styles from "./style.css";
 import { isSameMonth, isFirstDay, isSameDay, getMonth } from "../../services/calendar";
+import Schedule from "../Schedule";
 
-const CalendarElement = ({ day, month }) => {
+const CalendarElement = ({ day, month, schedules }) => {
 
     //初日かどうか
     const format = isFirstDay(day) ? "M月D日" : "D";
@@ -35,6 +36,11 @@ const CalendarElement = ({ day, month }) => {
                     {day.format(format)}
                 </span>
             </Typography>
+            <div className={styles.schedules}>
+                {schedules.map(e => (
+                    <Schedule key={e.id} schedule={e} />
+                ))}
+            </div>
         </div>
     );
 };
